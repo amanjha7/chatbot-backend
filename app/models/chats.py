@@ -13,7 +13,7 @@ class ChatModel:
 
     @staticmethod
     def get_all():
-        return list(mongo.db.chats.find().sort("created_at", 1))
+        return list(mongo.db.chats.find().sort("created_at", -1))
 
     @staticmethod
     def get_by_id(chat_id):

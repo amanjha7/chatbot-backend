@@ -35,12 +35,3 @@ def clean_and_alternate_messages(messages):
     return cleaned
 
 
-# Example usage:
-msgs = [
-    {"role": "user", "content": "Hello   "},
-    {"role": "user", "content": "  How are you?"},
-    {"role": "assistant", "content": "I'm fine."},
-    {"role": "assistant", "content": "   And you?   "}
-]
-
-print(clean_and_alternate_messages(msgs))

@@ -1,0 +1,109 @@
+# --------------------
+# Python / Flask
+# --------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Flask instance folder (runtime files)
+instance/
+*.db
+*.sqlite
+*.sqlite3
+
+# Flask cache and temp files
+*.log
+*.pot
+*.mo
+*.pycache
+*.coverage
+*.cover
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+*.hypothesis/
+
+# Pipenv / Poetry / Virtualenv
+Pipfile.lock
+poetry.lock
+venv/
+env/
+ENV/
+.venv/
+.virtualenv/
+
+# Environment variable files
+.env
+.env.*
+!.env.example
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# mypy / pytype / pylint
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pytype/
+.pylint.d/
+
+# --------------------
+# IDE / Editors
+# --------------------
+# VS Code
+.vscode/
+*.code-workspace
+
+# PyCharm / IntelliJ
+.idea/
+
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
+# --------------------
+# OS Specific
+# --------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# --------------------
+# Docker
+# --------------------
+docker-compose.override.yml
+*.pid
+*.seed
+*.bak
+
+# --------------------
+# Misc
+# --------------------
+logs/
+tmp/

@@ -1,8 +1,13 @@
 # extensions.py
 from flask_cors import CORS
+from flask_pymongo import PyMongo
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+mongo = PyMongo()
 
 def allow_all_cors(app):
-    print("All CORS Allowed")
     CORS(
         app,
         resources={r"/*": {"origins": "*"}},
@@ -11,3 +16,7 @@ def allow_all_cors(app):
         methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
     )
     return app
+
+def init_mongo(app):
+    app.config["MONGO_URI"] = os.getenv("MONGO_URI") + "/" + os.getenv("MONGO_DB")
+    mongo.init_app(app)

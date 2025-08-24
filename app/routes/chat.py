@@ -3,10 +3,12 @@ from app.services.chat_service import send_chat_request
 from app.models.messages import MessageModel
 from app.models.chats import ChatModel
 from datetime import datetime, timezone
+from app.middleware import require_api_key
 
 chat_bp = Blueprint("chat", __name__)
 
 @chat_bp.route("/", methods=["POST"])
+@require_api_key
 def chat():
     data = request.json
     provider = data.get("provider")
@@ -45,6 +47,7 @@ def update_message_to_db(messages, chat_id, resp_json):
     
 
 @chat_bp.route("/add",methods=["POST"])
+@require_api_key
 def add_chat():
     data = request.json
     ChatModel.create(
@@ -54,6 +57,7 @@ def add_chat():
     return jsonify({"status":"Successfilly created Chat"}), 200
 
 @chat_bp.route("/",methods=["GET"])
+@require_api_key
 def get_all_chats():
     chats = ChatModel.get_all()
     return jsonify(chats)

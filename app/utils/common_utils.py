@@ -35,3 +35,10 @@ def clean_and_alternate_messages(messages):
     return cleaned
 
 
+def generate_uuid():
+    import uuid
+    return str(uuid.uuid4())
+
+def hash_string(input_string):
+    import hashlib
+    return hashlib.sha256(input_string.encode()).hexdigest()

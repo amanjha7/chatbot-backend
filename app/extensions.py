@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 import os
+from loguru import logger
 
 load_dotenv()
 mongo = PyMongo()
@@ -20,3 +21,4 @@ def allow_all_cors(app):
 def init_mongo(app):
     app.config["MONGO_URI"] = os.getenv("MONGO_URI") + "/" + os.getenv("MONGO_DB")
     mongo.init_app(app)
+    logger.info('MongoDB Initialized with URI:'+ app.config["MONGO_URI"])

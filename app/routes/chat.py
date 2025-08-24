@@ -4,6 +4,7 @@ from app.models.messages import MessageModel
 from app.models.chats import ChatModel
 from datetime import datetime, timezone
 from app.middleware import require_api_key
+from flask import g
 
 chat_bp = Blueprint("chat", __name__)
 
@@ -52,14 +53,15 @@ def add_chat():
     data = request.json
     ChatModel.create(
         title=data.get("title") or "Title",
-        chatId=data.get("chat_id")
+        chatId=data.get("chat_id"),
+        user_id=g.get("public_id")
     )
     return jsonify({"status":"Successfilly created Chat"}), 200
 
 @chat_bp.route("/",methods=["GET"])
 @require_api_key
 def get_all_chats():
-    chats = ChatModel.get_all()
+    chats = ChatModel.get_all(g.public_id)
     return jsonify(chats)
 
 def add_message(chatId, message, role, created_at):

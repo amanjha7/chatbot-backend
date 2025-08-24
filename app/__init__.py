@@ -3,6 +3,7 @@ from .extensions import allow_all_cors
 from .routes.chat import chat_bp
 from .routes.message import message_bp
 from app.extensions import init_mongo
+from .routes.auth import auth_bp
 
 def create_app():
     app = Flask(__name__)
@@ -18,5 +19,6 @@ def create_app():
     # Register blueprints
     app.register_blueprint(chat_bp, url_prefix="/chat")
     app.register_blueprint(message_bp, url_prefix="/message")
+    app.register_blueprint(auth_bp, url_prefix="/auth")
 
     return app

@@ -12,13 +12,13 @@ chat_bp = Blueprint("chat", __name__)
 @require_api_key
 def chat():
     data = request.json
-    provider = data.get("provider")
-    model = data.get("model")
-    api_key = data.get("apiKey") or current_app.config["API_KEY"]
+    provider = data.get("provider") or "ollama"
+    model = data.get("model") or "phi3:mini"
+    api_key = data.get("apiKey") or (current_app.config["API_KEY"] if provider != "ollama" else None)
     messages = data.get("messages")
     chat_id = data.get("chat_id")
 
-    if not all([provider, model, api_key, messages]):
+    if not all([provider, model, messages]) or (provider != "ollama" and not api_key):
         return jsonify({"error": "Missing required fields"}), 400
     
     try:

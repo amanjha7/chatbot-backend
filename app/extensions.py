@@ -7,6 +7,8 @@ from loguru import logger
 
 load_dotenv()
 mongo = PyMongo()
+from flask_mail import Mail
+mail = Mail()
 
 def allow_all_cors(app):
     CORS(

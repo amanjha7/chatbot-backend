@@ -28,3 +28,15 @@ class UserModel:
     def check_user_exists(email):
         user = mongo.db.users.find_one({"email": email})
         return user is not None
+
+    @staticmethod
+    def get_user_by_email(email):
+        return mongo.db.users.find_one({"email": email}, {"password": 0})
+
+    @staticmethod
+    def update_password(user_id, new_password):
+        mongo.db.users.update_one(
+            {"id": user_id},
+            {"$set": {"password": hash_string(new_password)}}
+        )
+        #

@@ -3,6 +3,10 @@ from app.models.user import UserModel
 import jwt
 from datetime import datetime, timezone, timedelta
 from loguru import logger
+import random
+import string
+from flask_mail import Message
+from app.extensions import mail
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -45,3 +49,32 @@ def validate():
         secret_key = current_app.config.get("SECRET_KEY", "default_secret")
         token = jwt.encode({'public_id': user['id'], 'exp': datetime.now(timezone.utc) + timedelta(hours=24)}, secret_key, algorithm="HS256")
         return jsonify({"valid": True, "token": token}), 200
+
+def generate_password():
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=10))
+
+@auth_bp.route("/forgot_password", methods=["POST"])
+def forgot_password():
+    data = request.json
+    email = data.get("email")
+
+    if not email:
+        return jsonify({"error": "Email is required"}), 400
+
+    user = UserModel.get_user_by_email(email)
+    if not user:
+        return jsonify({"error": "User with this email does not exist"}), 400
+
+    new_password = generate_password()
+    UserModel.update_password(user['id'], new_password)
+
+    try:
+        msg = Message(subject="Your new password", recipients=[email],body=f"Hello,\n\nYour new password is: {new_password}\n\nPlease change it after logging in.")
+        msg.body = f"Hello,\n\nYour new password is: {new_password}\n\nPlease change it after logging in."
+        mail.send(msg)
+    except Exception as e:
+        logger.info("Error " )
+        logger.info(e)
+
+    logger.info(f"Password reset for user ID: {user['id']}")
+    return jsonify({"status": "success", "message": "A new password has been sent to your email"}), 200
